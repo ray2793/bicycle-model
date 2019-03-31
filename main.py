@@ -7,30 +7,31 @@ Have each of the three customers purchase a bike then print the name of the bike
 After each customer has purchased their bike, the script should print out the bicycle shop's remaining inventory for each bike, and how much profit they have made selling the three bikes.
 """
 
-import bicycles
+from bicycles import Bicycle, BikeShop, Customers
 
 if __name__ == '__main__':
 
     #Create a bicycle shop that has 6 different bicycle models in stock. The shop should charge its customers 20% over the cost of the bikes.
-    cheetahbike = bicycles.Bicycle("cheetahbike", 10, 50)
-    catbike = bicycles.Bicycle("catbike", 25, 100)
-    dogbike = bicycles.Bicycle("dogbike", 50, 200)
-    turtlebike = bicycles.Bicycle("turtlebike", 75, 300)
-    birdbike = bicycles.Bicycle("birdbike", 100, 500)
-    capybike = bicycles.Bicycle("capybike", 200, 1000)
     
-    jim = bicycles.Customers('jim', 200)
-    oscar = bicycles.Customers('oscar', 500)
-    jan = bicycles.Customers('jan', 1000)
+    bikes = {
+        Bicycle("cheetahbike", 10, 50), Bicycle("catbike", 25, 100),
+        Bicycle("dogbike", 50, 200), Bicycle("turtlebike", 75, 300),
+        Bicycle("birdbike", 100, 500), Bicycle("capybike", 200, 1000)
+    }
+    
+    # cheetahbike = Bicycle("cheetahbike", 10, 50)
+    # catbike = Bicycle("catbike", 25, 100)
+    # dogbike = Bicycle("dogbike", 50, 200)
+    # turtlebike = Bicycle("turtlebike", 75, 300)
+    # birdbike = Bicycle("birdbike", 100, 500)
+    # capybike = Bicycle("capybike", 200, 1000)
+    
+    jim = Customers('jim', 200)
+    oscar = Customers('oscar', 500)
+    jan = Customers('jan', 1000)
     
     #instantiate the bike shop and add bikes to inventory dictionary {model: object}
-    theoffice = bicycles.BikeShop('theoffice')
-    theoffice.inventory[cheetahbike.model] = cheetahbike
-    theoffice.inventory[catbike.model] = catbike
-    theoffice.inventory[dogbike.model] = dogbike
-    theoffice.inventory[turtlebike.model] = turtlebike
-    theoffice.inventory[birdbike.model] = birdbike
-    theoffice.inventory[capybike.model] = capybike
+    theoffice =  BikeShop('theoffice', bikes)
     
     #Print the name of each customer, and a list of the bikes offered by the bike shop that they can afford given their budget. Make sure you price the bikes in such a way that each customer can afford at least one.
     
@@ -52,9 +53,9 @@ if __name__ == '__main__':
         print (key)
     print()
     
-    jim.buy (theoffice, cheetahbike)
-    oscar.buy (theoffice, catbike)
-    jan.buy (theoffice, turtlebike)
+    jim.buy (theoffice, theoffice.inventory["cheetahbike"])
+    oscar.buy (theoffice, theoffice.inventory["catbike"])
+    jan.buy (theoffice, theoffice.inventory["turtlebike"])
     
     print ("\n"+ "Here's what the office has left:")
     for key, value in theoffice.inventory.items():

@@ -17,11 +17,13 @@ class Bicycle (object):
         
 class BikeShop (Bicycle):
     
-    def __init__(self, name):
+    def __init__(self, name, bikes):
         self.name = name
-        self.inventory = {}
         self.profit = 0
-    
+        self.inventory = {}
+        for bike in bikes:
+            self.inventory[bike.model] = bike
+
     def sell(self, bike):
         self.profit += (self.inventory[bike.model].price - self.inventory[bike.model].cost)
         self.inventory.pop(bike.model)
