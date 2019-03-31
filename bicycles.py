@@ -7,33 +7,48 @@ Have each of the three customers purchase a bike then print the name of the bike
 After each customer has purchased their bike, the script should print out the bicycle shop's remaining inventory for each bike, and how much profit they have made selling the three bikes.
 """
 
-class Bicycle(object):
+class Bicycle (object):
     
     def __init__(self, model, weight, cost):
         self.model = model
         self.weight = weight
         self.cost = cost
+        self.price = cost * 1.2
         
-class BikeShop (object):
+class BikeShop (Bicycle):
     
-    def __init__(self, name, inventory):
+    def __init__(self, name):
         self.name = name
-        self.inventory = inventory
+        self.inventory = {}
+        self.profit = 0
     
-    #def sell(self):
-        #TBD
-    
-    #def calcprofit(self):
-        #TBD
+    def sell(self, bike):
+        self.profit += (self.inventory[bike.model].price - self.inventory[bike.model].cost)
+        self.inventory.pop(bike.model)
+        print ('{} just sold a {}! '.format(self.name, bike.model))
 
-class Customers(object):
+class Customers(BikeShop):
     
     def __init__(self, name, fund):
         self.name = name
         self.fund = fund
+        self.potentialbikes = {}
+        self.ownedbikes = []
     
-    #def buy(self):
+    def printpotentialbikes(self):
+        print (self.name + ' can afford: ' + ', '.join(self.potentialbikes))
+    
+    def buy(self, bikeshop, bike):
+        self.ownedbikes.append(bike)
+        self.fund -= bike.price
+        print ('{} just bought a {} for ${:.0f} and has ${:.0f} left'.format(self.name, bike.model, bike.price, self.fund))
+        bikeshop.sell(bike)
+
+        
+        
+        
         
     
+
 
         
