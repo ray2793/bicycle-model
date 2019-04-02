@@ -18,14 +18,8 @@ if __name__ == '__main__':
         Bicycle("dogbike", 50, 200), Bicycle("turtlebike", 75, 300),
         Bicycle("birdbike", 100, 500), Bicycle("capybike", 200, 1000)
     }
-    
-    # cheetahbike = Bicycle("cheetahbike", 10, 50)
-    # catbike = Bicycle("catbike", 25, 100)
-    # dogbike = Bicycle("dogbike", 50, 200)
-    # turtlebike = Bicycle("turtlebike", 75, 300)
-    # birdbike = Bicycle("birdbike", 100, 500)
-    # capybike = Bicycle("capybike", 200, 1000)
-    
+    customers = [Customers('jim', 200), Customers('oscar', 500), Customers('jan', 1000)]
+
     jim = Customers('jim', 200)
     oscar = Customers('oscar', 500)
     jan = Customers('jan', 1000)
@@ -33,25 +27,19 @@ if __name__ == '__main__':
     #instantiate the bike shop and add bikes to inventory dictionary {model: object}
     theoffice =  BikeShop('theoffice', bikes)
     
-    #Print the name of each customer, and a list of the bikes offered by the bike shop that they can afford given their budget. Make sure you price the bikes in such a way that each customer can afford at least one.
-    
-    for bike in theoffice.inventory:
-        if jim.fund >= theoffice.inventory[bike].price:
-            jim.potentialbikes[bike] = theoffice.inventory[bike]
-        if oscar.fund >= theoffice.inventory[bike].price:
-            oscar.potentialbikes[bike] = theoffice.inventory[bike]
-        if jan.fund >= theoffice.inventory[bike].price:
-            jan.potentialbikes[bike] = theoffice.inventory[bike]  
-    
-    jim.printpotentialbikes()
-    oscar.printpotentialbikes()
-    jan.printpotentialbikes()
-    
+#Print the name of each customer, and a list of the bikes offered by the bike shop that they can afford given their budget. Make sure you price the bikes in such a way that each customer can afford at least one.
+    for customer in customers:
+        customer.affordables = theoffice.filter(customer.fund)
+        print ("{0} can afford: ".format(customer.name) + ", ".join(bike.model for bike in customer.affordables))
+
     #Print the initial inventory of the bike shop for each bike it carries.
     print ("\n"+ "Here's what the office has to offer today:")
-    for key, value in theoffice.inventory.items():
-        print (key)
-    print()
+    print (key for key, value in theoffice.inventory.items())
+    #     print (key)
+    # print()
+    
+    print (theoffice.inventory.keys())
+    print (theoffice.inventory.values())
     
     jim.buy (theoffice, theoffice.inventory["cheetahbike"])
     oscar.buy (theoffice, theoffice.inventory["catbike"])
@@ -61,7 +49,3 @@ if __name__ == '__main__':
     for key, value in theoffice.inventory.items():
         print (key)
     print ("The office has made ${:.0f}".format(theoffice.profit))
-    
-    
-    #loop through inventory
-    #for each customer, print price < funds

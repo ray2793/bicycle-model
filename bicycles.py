@@ -21,8 +21,14 @@ class BikeShop (Bicycle):
         self.name = name
         self.profit = 0
         self.inventory = {}
+        #Iterates through bikes set and puts bike objects in inventory dictionary with bike model as key
         for bike in bikes:
             self.inventory[bike.model] = bike
+    
+    #Takes bike object (values) from inventory dict, compares price of bike against input fund, returns LIST (since comprehension) of bikes
+    def filter (self, funds):
+        bikes = self.inventory.values()
+        return [bike for bike in bikes if bike.price <= funds]
 
     def sell(self, bike):
         self.profit += (self.inventory[bike.model].price - self.inventory[bike.model].cost)
@@ -36,6 +42,7 @@ class Customers(BikeShop):
         self.fund = fund
         self.potentialbikes = {}
         self.ownedbikes = []
+        self.affordables = []
     
     def printpotentialbikes(self):
         print (self.name + ' can afford: ' + ', '.join(self.potentialbikes))
